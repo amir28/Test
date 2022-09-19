@@ -50,6 +50,7 @@ jobs:
           export pkgver=${{ github.event.inputs.PKGVER }}
           export pkgrel=${{ github.event.inputs.PKGREL }}
           export CARCH=${{ github.event.inputs.CARCH }}
+          export GIT_SUBMODULE_STRATEGY="recursive"
           cd linux
           export CI_PROJECT_DIR=`pwd`
           ls # for debug
@@ -60,7 +61,7 @@ jobs:
           sed 's/source \/root\/.cargo\/env/source $HOME\/.cargo\/env\/source/' scripts/1_Install_Dependencies.sh > scripts/1_Install_Dependencies.sh 
           # ./build_tarball.sh LibreWolf-${{ github.event.inputs.VERSION }}-amd64.tar.bz2
           # ./build_tarball.sh LibreWolf-${pkgver}-${pkgrel}.${CARCH}.tar.bz2
-          sudo CARCH=${{ github.event.inputs.CARCH }} pkgrel=${{ github.event.inputs.PKGREL }} pkgver=${{ github.event.inputs.PKGVER }} ./build_tarball.sh "${CI_PROJECT_DIR}/LibreWolf-${pkgver}-${pkgrel}.${CARCH}.tar.bz2"
+          sudo -E ./build_tarball.sh "${CI_PROJECT_DIR}/LibreWolf-${pkgver}-${pkgrel}.${CARCH}.tar.bz2"
           
 
 
