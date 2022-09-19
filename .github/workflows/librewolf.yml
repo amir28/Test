@@ -30,14 +30,16 @@ jobs:
           git clone --depth=1 https://gitlab.com/librewolf-community/browser/linux.git
           cd linux
           ls # for debug
+          chmod +x ./build_tarball.sh
           
 
       # Runs a set of commands using the runners shell
       - name: Building
         run: |
-          ./build_tarball.sh LibreWolf-{{ github.event.inputs.VERSION }}-amd64.tar.bz2
           ls # for debug
           pwd # for debug
+          
+          ./build_tarball.sh LibreWolf-{{ github.event.inputs.VERSION }}-amd64.tar.bz2
           
 
 
