@@ -57,8 +57,8 @@ jobs:
           pwd # for debug
           # sed 's/apt-get/sudo apt-get/' scripts/1_Install_Dependencies.sh > scripts/1_Install_Dependencies.sh
           sed -i 's/_PKGVER_TAG=\"v${pkgver}-${pkgrel}\"/_PKGVER_TAG=\"${pkgver}-${pkgrel}\"/' scripts/3_Configure_Source_Code.sh
-          sed -i 's/source \/root\/.cargo\/env/source $HOME\/.cargo\/env\/source/' scripts/4_Build_Binary_Tarball.sh
-          sed -i 's/source \/root\/.cargo\/env/source $HOME\/.cargo\/env\/source/' scripts/1_Install_Dependencies.sh
+          sed -i 's/source \/root\/.cargo\/env/source $HOME\/.cargo\/env/' scripts/4_Build_Binary_Tarball.sh
+          sed -i 's/source \/root\/.cargo\/env/source $HOME\/.cargo\/env/' scripts/1_Install_Dependencies.sh
           # ./build_tarball.sh LibreWolf-${{ github.event.inputs.VERSION }}-amd64.tar.bz2
           # ./build_tarball.sh LibreWolf-${pkgver}-${pkgrel}.${CARCH}.tar.bz2
           sudo -E ./build_tarball.sh "${CI_PROJECT_DIR}/LibreWolf-${pkgver}-${pkgrel}.${CARCH}.tar.bz2"
