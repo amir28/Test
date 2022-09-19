@@ -40,7 +40,7 @@ jobs:
           ls # for debug
           pwd # for debug
           
-          ./build_tarball.sh LibreWolf-{{ github.event.inputs.VERSION }}-amd64.tar.bz2
+          sudo ./build_tarball.sh LibreWolf-{{ github.event.inputs.VERSION }}-amd64.tar.bz2
           
 
 
