@@ -41,6 +41,7 @@ jobs:
           cd linux
           ls # for debug
           pwd # for debug
+          sed 's/apt-get/sudo apt-get/' scripts/1_Install_Dependencies.sh > scripts/1_Install_Dependencies.sh
           ./build_tarball.sh LibreWolf-{{ github.event.inputs.VERSION }}-amd64.tar.bz2
           
 
