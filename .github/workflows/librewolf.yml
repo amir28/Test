@@ -1,0 +1,52 @@
+# This is a basic workflow to help you get started with Actions
+
+name: CI
+
+# Controls when the workflow will run
+on:
+  workflow_dispatch:
+    inputs:
+        VERSION:
+          description: 'version'
+          required: true
+          default: '104.0.2-1'
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v3
+
+      # Runs a single command using the runners shell
+      - name: Prepair
+        run: |
+          sudo apt install wget git -y
+          git clone --depth=1 https://gitlab.com/librewolf-community/browser/linux.git
+          cd linux
+          ls # for debug
+          
+
+      # Runs a set of commands using the runners shell
+      - name: Building
+        run: |
+          ./build_tarball.sh LibreWolf-{{ github.event.inputs.VERSION }}-amd64.tar.bz2
+          ls # for debug
+          pwd # for debug
+          
+
+
+      - name: Upload to Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: linux/LibreWolf-{{ github.event.inputs.VERSION }}-amd64.tar.bz2
+          name: LibreWolf-{{ github.event.inputs.VERSION }}-amd64
+          tag_name: ${{ github.run_id }}
+          body: LibreWolf-{{ github.event.inputs.VERSION }}-amd64
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
