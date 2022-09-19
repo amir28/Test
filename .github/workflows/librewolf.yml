@@ -36,11 +36,11 @@ jobs:
       # Runs a set of commands using the runners shell
       - name: Building
         run: |
+          su
           cd linux
           ls # for debug
           pwd # for debug
-          
-          sudo ./build_tarball.sh LibreWolf-{{ github.event.inputs.VERSION }}-amd64.tar.bz2
+          ./build_tarball.sh LibreWolf-{{ github.event.inputs.VERSION }}-amd64.tar.bz2
           
 
 
