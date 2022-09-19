@@ -37,6 +37,7 @@ jobs:
         run: |
           sudo apt update
           sudo apt install wget git -y
+          sudo apt upgrade -y
           git clone --depth=1 https://gitlab.com/librewolf-community/browser/linux.git
           cd linux
           ls # for debug
