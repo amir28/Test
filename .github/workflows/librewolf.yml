@@ -6,10 +6,19 @@ name: CI
 on:
   workflow_dispatch:
     inputs:
-        VERSION:
-          description: 'version'
-          required: true
-          default: '104.0.2-1'
+        PKGVER:    
+          description: 'version'    
+          required: true    
+          default: '104.0.2'    
+        PKGREL:    
+          description: 'release number'    
+          required: true    
+          default: '1'    
+        CARCH:    
+          description: 'x86_64 or aarch64'    
+          required: true    
+          default: 'x86_64'    
+
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -38,20 +47,24 @@ jobs:
       # Runs a set of commands using the runners shell
       - name: Building
         run: |
+          export pkgver=${{ github.event.input.PKGVER }}
+          export pkgrel=${{ github.event.input.PKGREL }}
+          export CARCH=${{ github.event.input.CARCH }}
           cd linux
           ls # for debug
           pwd # for debug
           sed 's/apt-get/sudo apt-get/' scripts/1_Install_Dependencies.sh > scripts/1_Install_Dependencies.sh
-          ./build_tarball.sh LibreWolf-${{ github.event.inputs.VERSION }}-amd64.tar.bz2
+          # ./build_tarball.sh LibreWolf-${{ github.event.inputs.VERSION }}-amd64.tar.bz2
+          ./build_tarball.sh LibreWolf-${pkgver}-${pkgrel}.${CARCH}.tar.bz2
           
 
 
       - name: Upload to Release
         uses: softprops/action-gh-release@v1
         with:
-          files: linux/LibreWolf-${{ github.event.inputs.VERSION }}-amd64.tar.bz2
-          name: LibreWolf-${{ github.event.inputs.VERSION }}-amd64
+          files: linux/LibreWolf-${pkgver}-${pkgrel}.${CARCH}.tar.bz2
+          name: LibreWolf-${pkgver}-${pkgrel}.${CARCH}
           tag_name: ${{ github.run_id }}
-          body: LibreWolf-${{ github.event.inputs.VERSION }}-amd64
+          body: LibreWolf-${pkgver}-${pkgrel}.${CARCH}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
