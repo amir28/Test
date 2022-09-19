@@ -26,6 +26,7 @@ jobs:
       # Runs a single command using the runners shell
       - name: Prepair
         run: |
+          sudo apt update
           sudo apt install wget git -y
           git clone --depth=1 https://gitlab.com/librewolf-community/browser/linux.git
           cd linux
