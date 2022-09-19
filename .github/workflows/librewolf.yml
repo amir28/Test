@@ -47,9 +47,9 @@ jobs:
       # Runs a set of commands using the runners shell
       - name: Building
         run: |
-          export pkgver=${{ github.event.input.PKGVER }}
-          export pkgrel=${{ github.event.input.PKGREL }}
-          export CARCH=${{ github.event.input.CARCH }}
+          export pkgver=${{ github.event.inputs.PKGVER }}
+          export pkgrel=${{ github.event.inputs.PKGREL }}
+          export CARCH=${{ github.event.inputs.CARCH }}
           cd linux
           ls # for debug
           pwd # for debug
@@ -62,7 +62,7 @@ jobs:
       - name: Upload to Release
         uses: softprops/action-gh-release@v1
         with:
-          files: linux/LibreWolf-${pkgver}-${pkgrel}.${CARCH}.tar.bz2
+          files: linux/LibreWolf-${{ github.event.inputs.PKGVER }}-${{ github.event.inputs.PKGREL }}.${{ github.event.inputs.CARCH }}.tar.bz2
           name: LibreWolf-${pkgver}-${pkgrel}.${CARCH}
           tag_name: ${{ github.run_id }}
           body: LibreWolf-${pkgver}-${pkgrel}.${CARCH}
