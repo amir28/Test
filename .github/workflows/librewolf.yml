@@ -78,8 +78,8 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           files: linux/LibreWolf-${{ github.event.inputs.PKGVER }}-${{ github.event.inputs.PKGREL }}.${{ github.event.inputs.CARCH }}.tar.bz2
-          name: LibreWolf-${pkgver}-${pkgrel}.${CARCH}
+          name: LibreWolf-${{ github.event.inputs.PKGVER }}-${{ github.event.inputs.PKGREL }}.${{ github.event.inputs.CARCH }}
           tag_name: ${{ github.run_id }}
-          body: LibreWolf-${pkgver}-${pkgrel}.${CARCH}
+          body: LibreWolf-${{ github.event.inputs.PKGVER }}-${{ github.event.inputs.PKGREL }}.${{ github.event.inputs.CARCH }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
